@@ -1,0 +1,2 @@
+takepicture-addon
+=================
