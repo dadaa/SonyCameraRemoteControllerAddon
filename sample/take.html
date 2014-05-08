@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/.  -->
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>take a photo</title>
+  <style type="text/css">
+  html {
+    background-color: black;
+  }
+  img {
+    width: 200px;
+  }
+  </style>
+
+  <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) {
+    //setup camera
+    document.sonycameracontroller.setup({ipaddress: "192.168.122.1", port: 8080, version: "1.0"});
+
+    //prepares a listener to get a photo url
+    var listener = {taken: function(url) {
+      var img = document.createElement("img");
+      img.setAttribute("src", url);
+      document.getElementById("photos").appendChild(img);
+    }};
+
+    var button = document.getElementById("take-button");
+    button.addEventListener("click", function(e) {
+      //take a photo
+      document.sonycameracontroller.take(listener);
+    }, false)
+  });
+  </script>
+</head>
+<body>
+  <button id="take-button">take a photo</button>
+  <section id="photos"></section>
+</body>
+</html>
